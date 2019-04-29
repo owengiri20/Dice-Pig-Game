@@ -34,18 +34,52 @@ document.querySelector(".btn-roll").addEventListener("click", function() {
     roundScore += dice;
     document.querySelector(`#current-${activePlayer}`).textContent = roundScore;
   } else {
-    // next player
-    document.getElementById(`current-${activePlayer}`).textContent = 0;
-
-    activePlayer === 0 ? (activePlayer = 1) : (activePlayer = 0);
-    roundScore = 0;
-
-    document.querySelector(`.player-0-panel`).classList.toggle("active");
-    document.querySelector(`.player-1-panel`).classList.toggle("active");
-
-    document.querySelector(".dice").style.display = "none";
+    nextPlayer();
   }
 });
+
+document.querySelector(".btn-hold").addEventListener("click", function() {
+  // add current score with player global score
+  // activePlayer == 0 ? (scores[0] += roundScore) : (scores[1] += roundScore);
+  scores[activePlayer] += roundScore;
+
+  // update the UI
+  document.querySelector(`#score-${activePlayer}`).textContent =
+    scores[activePlayer];
+
+  // Check if player won the game
+  if (scores[activePlayer] >= 100) {
+    document.querySelector(`#name-${activePlayer}`).textContent = "WINNER";
+    document.querySelector(".dice").style.display = "none";
+    document
+      .querySelector(`.player-${activePlayer}-panel`)
+      .classList.add("winner");
+    document
+      .querySelector(`.player-${activePlayer}-panel`)
+      .classList.remove("active");
+  } else {
+    // switch turns
+    nextPlayer();
+  }
+});
+
+function nextPlayer() {
+  // next player
+  document.getElementById(`current-${activePlayer}`).textContent = 0;
+
+  // terninary opperator to change the active player
+  activePlayer === 0 ? (activePlayer = 1) : (activePlayer = 0);
+
+  // reset round score
+  roundScore = 0;
+
+  // toggle the 'active' class
+  document.querySelector(`.player-0-panel`).classList.toggle("active");
+  document.querySelector(`.player-1-panel`).classList.toggle("active");
+
+  // hide dice after user turn
+  document.querySelector(".dice").style.display = "none";
+}
 
 //
 // dice = Math.floor(Math.random() * 6) + 1;
