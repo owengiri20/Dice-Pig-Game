@@ -6,7 +6,9 @@ GAME RULES:
 - The player can choose to 'Hold', which means that his ROUND score gets added to his GLBAL score. After that, it's the next player's turn
 - The first player to reach 100 points on GLOBAL score wins the game
 */
-var scores, roundScore, activePlayer, gamePlaying, prevDiceValue;
+var scores, roundScore, activePlayer, gamePlaying, prevDiceValue, winScore;
+var newWinScoreValue = document.querySelector(".winning-score-value");
+
 init();
 
 document.querySelector(".btn-roll").addEventListener("click", function() {
@@ -33,7 +35,6 @@ document.querySelector(".btn-roll").addEventListener("click", function() {
         // update the UI
         document.querySelector(`#score-${activePlayer}`).textContent =
           scores[activePlayer];
-
         nextPlayer();
         return;
       }
@@ -61,7 +62,7 @@ document.querySelector(".btn-hold").addEventListener("click", function() {
       scores[activePlayer];
 
     // Check if player won the game
-    if (scores[activePlayer] >= 100) {
+    if (scores[activePlayer] >= winScore) {
       document.querySelector(`#name-${activePlayer}`).textContent = "WINNER";
       document.querySelector(".dice").style.display = "none";
       document
@@ -104,9 +105,11 @@ document.querySelector(".btn-new").addEventListener("click", init);
 
 function init() {
   gamePlaying = true;
+  winScore = 100;
   scores = [0, 0];
   roundScore = 0;
   activePlayer = 0;
+  newWinScoreValue.value = "100";
 
   document.querySelector(".player-0-panel").classList.remove("active");
   document.querySelector(".player-0-panel").classList.add("active");
@@ -124,6 +127,14 @@ function init() {
   document.getElementById("score-1").textContent = 0;
   document.getElementById("current-0").textContent = 0;
   document.getElementById("current-1").textContent = 0;
+}
+
+document
+  .querySelector(".set-winning-score")
+  .addEventListener("click", setWinScore);
+
+function setWinScore() {
+  winScore = newWinScoreValue.value;
 }
 
 //

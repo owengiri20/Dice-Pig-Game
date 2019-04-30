@@ -150,11 +150,28 @@ i {
 .btn-new {
   top: 45px;
 }
+.winning-score-value {
+  /* position: absolute; */
+  /* background: red; */
+  position: relative;
+  width: 200px;
+  top: -60px;
+  left: 40%;
+  text-align: center;
+}
+
+.set-winning-score {
+  top: 510px;
+  background: #08804c;
+  color: #fff;
+  border-bottom: #eb4d4d66 2px solid;
+}
+
 .btn-roll {
   top: 403px;
 }
 .btn-hold {
-  top: 467px;
+  top: 457px;
 }
 
 .dice {
