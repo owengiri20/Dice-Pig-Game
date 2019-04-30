@@ -111,6 +111,9 @@ function init() {
   activePlayer = 0;
   newWinScoreValue.value = "100";
 
+  document.querySelector(".set-winning-score").disabled = false;
+  newWinScoreValue.disabled = false;
+
   document.querySelector(".player-0-panel").classList.remove("active");
   document.querySelector(".player-0-panel").classList.add("active");
 
@@ -135,6 +138,8 @@ document
 
 function setWinScore() {
   winScore = newWinScoreValue.value;
+  document.querySelector(".set-winning-score").disabled = true;
+  newWinScoreValue.disabled = true;
 }
 
 //
