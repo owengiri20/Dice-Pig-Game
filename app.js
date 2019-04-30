@@ -29,6 +29,11 @@ document.querySelector(".btn-roll").addEventListener("click", function() {
       ).textContent = roundScore;
 
       if (dice === 6 && prevDiceValue === 6) {
+        scores[activePlayer] = 0;
+        // update the UI
+        document.querySelector(`#score-${activePlayer}`).textContent =
+          scores[activePlayer];
+
         nextPlayer();
         return;
       }
