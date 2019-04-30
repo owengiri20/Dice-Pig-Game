@@ -8,16 +8,7 @@ GAME RULES:
 */
 var scores, roundScore, activePlayer;
 
-scores = [0, 0];
-roundScore = 0;
-activePlayer = 0;
-
-document.querySelector(".dice").style.display = "none";
-
-document.getElementById("score-0").textContent = 0;
-document.getElementById("score-1").textContent = 0;
-document.getElementById("current-0").textContent = 0;
-document.getElementById("current-1").textContent = 0;
+init();
 
 document.querySelector(".btn-roll").addEventListener("click", function() {
   // 1. random number
@@ -79,6 +70,31 @@ function nextPlayer() {
 
   // hide dice after user turn
   document.querySelector(".dice").style.display = "none";
+}
+
+document.querySelector(".btn-new").addEventListener("click", init);
+
+function init() {
+  scores = [0, 0];
+  roundScore = 0;
+  activePlayer = 0;
+
+  document.querySelector(".player-0-panel").classList.remove("active");
+  document.querySelector(".player-0-panel").classList.add("active");
+
+  document.querySelector(".player-1-panel").classList.remove("active");
+  document.querySelector(".player-0-panel").classList.remove("winner");
+  document.querySelector(".player-1-panel").classList.remove("winner");
+
+  document.querySelector("#name-0").textContent = "PLAYER 1";
+  document.querySelector("#name-1").textContent = "PLAYER 2";
+
+  document.querySelector(".dice").style.display = "none";
+
+  document.getElementById("score-0").textContent = 0;
+  document.getElementById("score-1").textContent = 0;
+  document.getElementById("current-0").textContent = 0;
+  document.getElementById("current-1").textContent = 0;
 }
 
 //
