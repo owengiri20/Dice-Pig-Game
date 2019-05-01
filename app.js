@@ -13,24 +13,33 @@ init();
 
 document.querySelector(".btn-roll").addEventListener("click", function() {
   if (gamePlaying) {
+    document.querySelector(".set-winning-score").disabled = true;
+    newWinScoreValue.disabled = true;
+
     // 1. random number
     var dice = Math.floor(Math.random() * 6) + 1;
-    // dice = 6;
+    var dice2 = Math.floor(Math.random() * 6) + 1;
+    var addedDice = dice + dice2;
 
     // 2. Display the result
     var diceDOM = document.querySelector(".dice");
+    var diceDOM2 = document.querySelector(".dice-2");
+
     diceDOM.style.display = "block";
+    diceDOM2.style.display = "block";
+
     diceDOM.src = `dice-${dice}.png`;
+    diceDOM2.src = `dice-${dice2}.png`;
 
     // 3. Update the round score IF the rolled number was not a 1
-    if (dice !== 1) {
+    if (dice !== 1 && dice2 !== 1) {
       // add the score
-      roundScore += dice;
+      roundScore += addedDice;
       document.querySelector(
         `#current-${activePlayer}`
       ).textContent = roundScore;
 
-      if (dice === 6 && prevDiceValue === 6) {
+      if (dice === 6 && dice2 === 6) {
         scores[activePlayer] = 0;
         // update the UI
         document.querySelector(`#score-${activePlayer}`).textContent =
@@ -38,7 +47,7 @@ document.querySelector(".btn-roll").addEventListener("click", function() {
         nextPlayer();
         return;
       }
-      prevDiceValue = dice;
+      // prevDiceValue = dice;
     } else {
       nextPlayer();
     }
@@ -53,6 +62,9 @@ document.querySelector(".btn-roll").addEventListener("click", function() {
 
 document.querySelector(".btn-hold").addEventListener("click", function() {
   if (gamePlaying) {
+    document.querySelector(".set-winning-score").disabled = true;
+    newWinScoreValue.disabled = true;
+
     // add current score with player global score
     // activePlayer == 0 ? (scores[0] += roundScore) : (scores[1] += roundScore);
     scores[activePlayer] += roundScore;
@@ -99,6 +111,7 @@ function nextPlayer() {
 
   // hide dice after user turn
   document.querySelector(".dice").style.display = "none";
+  document.querySelector(".dice-2").style.display = "none";
 }
 
 document.querySelector(".btn-new").addEventListener("click", init);
@@ -125,6 +138,7 @@ function init() {
   document.querySelector("#name-1").textContent = "PLAYER 2";
 
   document.querySelector(".dice").style.display = "none";
+  document.querySelector(".dice-2").style.display = "none";
 
   document.getElementById("score-0").textContent = 0;
   document.getElementById("score-1").textContent = 0;
