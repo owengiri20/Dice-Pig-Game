@@ -1,5 +1,4 @@
 var scores, roundScore, activePlayer, gamePlaying;
-
 init();
 var lastDice;
 
@@ -7,7 +6,7 @@ document.querySelector(".btn-roll").addEventListener("click", function() {
   if (gamePlaying) {
     // 1. random number
     var dice = Math.floor(Math.random() * 6) + 1;
-
+    // dice = 6;
     // 2. Display the result
     var diceDOM = document.querySelector(".dice");
     diceDOM.style.display = "block";
@@ -17,8 +16,10 @@ document.querySelector(".btn-roll").addEventListener("click", function() {
     if (dice === 6 && lastDice === 6) {
       // player loses score
       scores[activePlayer] = 0;
-      document.querySelector(`.score-${activePlayer}`).textContent = "0";
+      document.querySelector(`#score-${activePlayer}`).textContent = "0";
       nextPlayer();
+      lastDice = 0;
+      return;
     } else if (dice !== 1) {
       // add the score
       roundScore += dice;
@@ -29,8 +30,6 @@ document.querySelector(".btn-roll").addEventListener("click", function() {
       nextPlayer();
     }
     lastDice = dice; // store prev/last dice value
-  } else {
-    console.log("game is finished");
   }
 });
 
@@ -44,8 +43,16 @@ document.querySelector(".btn-hold").addEventListener("click", function() {
     document.querySelector(`#score-${activePlayer}`).textContent =
       scores[activePlayer];
 
+    var input = document.querySelector(".final-score").value;
+    var winningScore;
+    if (input) {
+      winningScore = input;
+    } else {
+      winningScore = 100;
+    }
+
     // Check if player won the game
-    if (scores[activePlayer] >= 100) {
+    if (scores[activePlayer] >= winningScore) {
       document.querySelector(`#name-${activePlayer}`).textContent = "WINNER";
       document.querySelector(".dice").style.display = "none";
       document
@@ -66,6 +73,7 @@ document.querySelector(".btn-hold").addEventListener("click", function() {
 
 function nextPlayer() {
   // next player
+  lastDice = 0;
   document.getElementById(`current-${activePlayer}`).textContent = 0;
 
   // terninary opperator to change the active player
@@ -89,6 +97,7 @@ function init() {
   scores = [0, 0];
   roundScore = 0;
   activePlayer = 0;
+  lastDice = 0;
 
   document.querySelector(".player-0-panel").classList.remove("active");
   document.querySelector(".player-0-panel").classList.add("active");
